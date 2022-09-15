@@ -6,7 +6,7 @@ import csv
 import scipy.interpolate
 from scipy.optimize import curve_fit
 # from Data_Vis_gradient_descent import *
-#from data import *
+from data import *
 import scipy.stats as st
 import random as rand
 
@@ -823,4 +823,4 @@ def plot_pressure_model():
     plt.show()
 
 plot_misfit()
-#plot_pressure_model()
+plot_pressure_model()
