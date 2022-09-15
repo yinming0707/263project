@@ -713,6 +713,18 @@ def plot_pressure_model():
     P = np.genfromtxt('Pmatrix.csv', delimiter=',', skip_header=0)
     # samples = construct_samples(ap, bp, P, 100)
 
+    # plotting only data which is pressure and mass flow,q
+    fd, axd = plt.subplots(1,1)
+    axd2 = axd.twinx()
+    axd.plot(qt,qv/1000, '-b', label = 'mass flow')
+    axd2.plot(otime, opres/(10**6), '-k', label = 'pressure')
+    axd.set_ylabel("monthly mass Flow [tonne]")
+    axd2.set_ylabel("Pressure [MPa]")
+    axd.set_xlabel("Time [yr]")
+    axd.set_title("pressure and mass flow changing in reservoir over time")
+    plt.legend()
+    plt.show()
+
     # plot only mass flow rate
     f, ax = plt.subplots(1, 1)
     ax.plot(qt, qv, '-k', label='data')
