@@ -6,7 +6,7 @@ import csv
 import scipy.interpolate
 from scipy.optimize import curve_fit
 # from Data_Vis_gradient_descent import *
-from data import *
+#from data import *
 import scipy.stats as st
 import random as rand
 
@@ -557,7 +557,7 @@ def plot_misfit():
     f12.plot(mtime, [0] * len(mtime), '--', label='0 line')
     f12.plot(otime[1:-1], opres[1:-1]/(10**6)-f22(otime[1:-1]), '.', label='misfit for guessed parameters.')
 
-    f12.set_title('misfit for guessed parameters. Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f22(otime[1:-1])))))
+    f12.set_title('misfit for guessed parameters. Misfit = {0:.2f} MPa^2'.format(np.sum((opres[1:-1]/(10**6)-f22(otime[1:-1]))**2)))
     f12.set_ylabel('Pressure misfit(MPa)')
 
     plt.show()
@@ -573,7 +573,7 @@ def plot_misfit():
 
     f13.plot(ct, [0] * len(ct), '--')
     f13.plot(otime[1:-1], opres[1:-1]/(10**6)-f23(otime[1:-1]), '.', label = 'misfit for curve fitting parameters.')
-    f13.set_title('misfit for curve fitting parameters.Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f23(otime[1:-1])))))
+    f13.set_title('misfit for curve fitting parameters.Misfit = {0:.2f} MPa^2'.format(np.sum((opres[1:-1]/(10**6)-f23(otime[1:-1]))**2)))
     f13.set_ylabel('Pressure misfit (MPa)')
     plt.tight_layout()
     plt.show()
@@ -602,7 +602,7 @@ def plot_misfit():
 
     f15.plot(nott, [0] * len(nott), '--')
     f15.plot(otime[1:-1], opres[1:-1]/(10**6)-f24(otime[1:-1]), '.')
-    f15.set_title('misfit for initial model curve.Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f24(otime[1:-1])))))
+    f15.set_title('misfit for initial model curve.Misfit = {0:.2f} MPa^2'.format((np.sum((opres[1:-1]/(10**6)-f24(otime[1:-1]))**2))))
     f15.set_ylabel('Pressure misfit (MPa)')
     plt.show()
     plt.show()
@@ -823,4 +823,4 @@ def plot_pressure_model():
     plt.show()
 
 plot_misfit()
-plot_pressure_model()
+#plot_pressure_model()
