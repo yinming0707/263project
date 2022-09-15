@@ -242,23 +242,24 @@ def model_ensemble(samples):
     mtime1, mpres1 = solve_ode(ode_model, t0, t1, dt, x0, [7.5, 8e-6])
     cumtime, cumgl = cumulator(mpres1*10**6,x0,0.1e+6,mtime1,mtime1[0],mtime1[-1])
 
+    timex = 2023
     for a, b in samples:
         # pm=
         # ax.plot(
         # *hint* use lw= and alpha= to set linewidth and transparency
 
         mtime, mpres = solve_ode(ode_model, t0, t1, dt, x0, [a, b])
-        t2, p2 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [a, b], 2)
-        cumtp1, cumgl1 = cumulator(np.append(mpres, p2) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t2), t1, 2024)
+        t2, p2 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [a, b], 2)
+        cumtp1, cumgl1 = cumulator(np.append(mpres, p2) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t2), t1, timex)
 
-        t3, p3 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [a, b], 1.5)
-        cumtp2, cumgl2 = cumulator(np.append(mpres, p3) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t3), t1, 2024)
+        t3, p3 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [a, b], 1.5)
+        cumtp2, cumgl2 = cumulator(np.append(mpres, p3) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t3), t1, timex)
 
-        t4, p4 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [a, b], 1)
-        cumtp3, cumgl3 = cumulator(np.append(mpres, p4) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t4), t1, 2024)
+        t4, p4 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [a, b], 1)
+        cumtp3, cumgl3 = cumulator(np.append(mpres, p4) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t4), t1, timex)
 
-        t5, p5 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [a, b], 0.5)
-        cumtp4, cumgl4 = cumulator(np.append(mpres, p5) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t5), t1, 2024)
+        t5, p5 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [a, b], 0.5)
+        cumtp4, cumgl4 = cumulator(np.append(mpres, p5) * (10 ** 6), x0, 0.1e+6, np.append(mtime, t5), t1, timex)
 
         ax.plot(t2, p2, 'c-', lw=0.25, alpha=0.2)
         ax.plot(t3,p3, 'g-',lw=0.25, alpha=0.3)
@@ -285,17 +286,17 @@ def model_ensemble(samples):
     ax.legend()
 
     mtime, mpres = solve_ode(ode_model, t0, t1, dt, x0, [7.5, 8e-6])
-    tp1, pp1 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 2)
-    cumtp1, cumgl1 = cumulator(np.append(mpres, pp1) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp1), t0, 2024)
+    tp1, pp1 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 2)
+    cumtp1, cumgl1 = cumulator(np.append(mpres, pp1) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp1), t0, timex)
 
-    tp2, pp2 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 1.5)
-    cumtp2, cumgl2 = cumulator(np.append(mpres, pp2) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp2), t0, 2024)
+    tp2, pp2 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 1.5)
+    cumtp2, cumgl2 = cumulator(np.append(mpres, pp2) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp2), t0, timex)
 
-    tp3, pp3 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 1)
-    cumtp3, cumgl3 = cumulator(np.append(mpres, pp3) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp3), t0, 2024)
+    tp3, pp3 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 1)
+    cumtp3, cumgl3 = cumulator(np.append(mpres, pp3) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp3), t0, timex)
 
-    tp4, pp4 = predict_t(ode_model, t0, t1, 2024, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 0.5)
-    cumtp4, cumgl4 = cumulator(np.append(mpres, pp4) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp4), t0, 2024)
+    tp4, pp4 = predict_t(ode_model, t0, t1, timex, dt, x0, mpres[-1] * (10 ** 6), [7.5, 8e-6], 0.5)
+    cumtp4, cumgl4 = cumulator(np.append(mpres, pp4) * (10 ** 6), x0, 0.1e+6, np.append(mtime, tp4), t0, timex)
 
     ax5.plot(cumtp1, cumgl1, 'c-', label ='double')
     ax5.plot(cumtp2, cumgl2, 'g-', label ='1.5 times')
@@ -327,7 +328,7 @@ a, b, posterior = grid_search()
 
 # TASK 4: Read the instructions in the function definition.
 # this task relies on the output of TASK 2, so don't comment that command
-N = 100
+N = 200
 samples = construct_samples(a, b, posterior, N)
 
 # TASK 5: Read the instructions in the function definition.

@@ -557,7 +557,7 @@ def plot_misfit():
     f12.plot(mtime, [0] * len(mtime), '--', label='0 line')
     f12.plot(otime[1:-1], opres[1:-1]/(10**6)-f22(otime[1:-1]), '.', label='misfit for guessed parameters.')
 
-    f12.set_title('misfit for guessed parameters. Misfit = {0:.2f}'.format(np.sum(abs(opres[1:-1]/(10**6)-f22(otime[1:-1])))))
+    f12.set_title('misfit for guessed parameters. Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f22(otime[1:-1])))))
     f12.set_ylabel('Pressure misfit(MPa)')
 
     plt.show()
