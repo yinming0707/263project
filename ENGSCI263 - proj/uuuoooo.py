@@ -60,7 +60,7 @@ def ode_model(t, x, q, a, b, xo):
 
 def numerical(t, x, xo, q, a, b):
     if x - xo > .02:
-        return (np.exp(2 * np.sqrt(a * b * q) * t) - 1) / (np.exp(2 * np.sqrt(a * b * q) * t) + 1)
+        return np.sqrt(a*q/b)*((np.exp(2 * np.sqrt(a * b * q) * t) - 1) / (np.exp(2 * np.sqrt(a * b * q) * t) + 1))
     else:
         return a * q * t
 
@@ -189,7 +189,7 @@ def plot_benchmark():
     t1 = 1
     dt = 0.01
     t = np.arange(t0, t1 + dt, dt)
-    a, b, q, po = .5, 0.08, [5]*len(t), 0
+    a, b, q, po = .5, 0.008, [5]*len(t), 0
     tl, legit = solver(t0, t1, dt, 0, 25,q, [a, b])
 
     t2, predicted = solve_ode(ode_model, t0, t1, dt, 0, q, [a, b, 25])

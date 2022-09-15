@@ -51,7 +51,7 @@ def get_familiar_with_model():
     tm, pm = solve_ode(ode_model, 2009, 2019, 0.01, 25.16e+6, [a, b])
 
     # error variance - 2 bar
-    v = 2.
+    v = 2
 
     # 2. calculate the sum-of-squares objective function
     # S =
@@ -119,7 +119,7 @@ def grid_search():
     po = po / (10 ** 6)
 
     # error variance - 2 bar
-    v = 2.
+    v = 2
 
     # grid search algorithm
     for i in range(len(a)):
@@ -282,7 +282,7 @@ def model_ensemble(samples):
 
     # 4. plot Wairakei data as error bars
     # *hint* see TASK 1 for appropriate plotting commands
-    v = 2.
+    v = 2
     ax.errorbar(tp, po, yerr=v, fmt='ro', label='data')
     ax.set_xlabel('time(years)')
     ax.set_ylabel('pressure(MPa)')
