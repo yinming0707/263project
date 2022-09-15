@@ -50,6 +50,44 @@ def ode_model(t, x, q, a, b, x0):
     else:
         return (a * q)
 
+def ode_modelnotgood(t, x, q, a, b, x0):
+    ''' Return the derivative dx/dt at time, t, for given parameters.
+
+        Parameters:
+        -----------
+        t : float
+            Independent variable.
+        x : float
+            Dependent variable.
+        q : float
+            Source/sink rate.
+        a : float
+            Source/sink strength parameter.
+        b : float
+            Recharge strength parameter.
+        x0 : float
+            Ambient value of dependent variable.
+
+        Returns:
+        --------
+        dxdt : float
+            Derivative of dependent variable with respect to independent variable.
+
+        Notes:
+        ------
+        None
+
+        Examples:
+        ---------
+        >>> ode_model(0, 1, 2, 3, 4, 5)
+        22
+
+    '''
+    x0 = 25.16e+6
+    if (x - x0) >0:
+        return (a * q) - (b * ((x - x0) ** 2))
+    else:
+        return (a * q)
 
 def solve_ode_qc(f, t, x0, pars, q, cap):
     ''' Solve an ODE numerically with constant q.
@@ -517,9 +555,9 @@ def plot_misfit():
     mtime, mpres = solve_ode(f, t0, t1, dt, x0, pars)
     f22=scipy.interpolate.interp1d(mtime, mpres)
     f12.plot(mtime, [0] * len(mtime), '--', label='0 line')
-    f12.plot(otime[1:-1], opres[1:-1]/(10**6)-f22(otime[1:-1]), '.', label='misfit for guessed parameters')
+    f12.plot(otime[1:-1], opres[1:-1]/(10**6)-f22(otime[1:-1]), '.', label='misfit for guessed parameters.')
 
-    f12.set_title('misfit for guessed parameters')
+    f12.set_title('misfit for guessed parameters. Misfit = {0:.2f}'.format(np.sum(abs(opres[1:-1]/(10**6)-f22(otime[1:-1])))))
     f12.set_ylabel('Pressure misfit(MPa)')
 
     plt.show()
@@ -534,10 +572,39 @@ def plot_misfit():
     f23 = scipy.interpolate.interp1d(ct,cp)
 
     f13.plot(ct, [0] * len(ct), '--')
-    f13.plot(otime[1:-1], opres[1:-1]/(10**6)-f23(otime[1:-1]), '.', label = 'misfit for curve fitting parameters')
-    f13.set_title('misfit for curve fitting parameters')
+    f13.plot(otime[1:-1], opres[1:-1]/(10**6)-f23(otime[1:-1]), '.', label = 'misfit for curve fitting parameters.')
+    f13.set_title('misfit for curve fitting parameters.Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f23(otime[1:-1])))))
     f13.set_ylabel('Pressure misfit (MPa)')
     plt.tight_layout()
+    plt.show()
+
+    nott, notp = solve_ode(ode_modelnotgood, t0, t1, dt, x0, pars2)
+
+
+    g6, f16 = plt.subplots(1,1)
+
+    f16.plot(nott, notp, label = 'Initial model')
+    f16.plot(otime, opres/(10**6), 'x', label = 'data')
+    f16.set_title('Plot of Initial model and data')
+    f16.set_ylabel('Pressure (MPa)')
+    plt.show()
+
+    g7, f160 = plt.subplots(1,1)
+
+    f160.plot(mtime, mpres, label = 'Initial model')
+    f160.plot(otime, opres/(10**6), 'x', label = 'data')
+    f160.set_title('Plot of Final improved model and data')
+    f160.set_ylabel('Pressure (MPa)')
+    plt.show()
+
+    g5, f15 = plt.subplots(1,1)
+    f24 = scipy.interpolate.interp1d(nott,notp)
+
+    f15.plot(nott, [0] * len(nott), '--')
+    f15.plot(otime[1:-1], opres[1:-1]/(10**6)-f24(otime[1:-1]), '.')
+    f15.set_title('misfit for initial model curve.Misfit = {0:.2f} MPa'.format(np.sum(abs(opres[1:-1]/(10**6)-f24(otime[1:-1])))))
+    f15.set_ylabel('Pressure misfit (MPa)')
+    plt.show()
     plt.show()
 
 def plot_pressure_model():
