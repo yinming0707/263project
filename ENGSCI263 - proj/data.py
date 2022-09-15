@@ -228,7 +228,7 @@ def model_ensemble(samples):
     # 1. choose a time vector to evaluate your model between 1953 and 2012
     # t =
     t0, t1, dt, x0 = 2009, 2019, 1 / 12, 25.16e+6
-    t = np.arange(t0, t1, dt)
+    t = np.arange(t0, t1+dt, dt)
 
     # 2. create a figure and axes (see TASK 1)
     # f,ax =
@@ -269,6 +269,9 @@ def model_ensemble(samples):
         ax5.plot(cumtp2,np.array(cumgl2)+cumgl[-1], 'g-',lw=0.25, alpha=0.3)
         ax5.plot(cumtp3, np.array(cumgl3)+cumgl[-1], 'm-', lw=0.25, alpha=0.4)
         ax5.plot(cumtp4,np.array(cumgl4)+cumgl[-1],'y-',lw=0.25, alpha=0.5)
+
+        tm, pm = solve_ode(ode_model, 2009, 2019, 1 / 12, 25.16e+6, [a, b])
+        ax.plot(t, pm, 'b-', lw=0.25, alpha=0.2)
 
     ax.plot([], [], 'k-', lw=0.5, alpha=0.4, label='model ensemble')
 
